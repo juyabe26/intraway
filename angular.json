@@ -95,6 +95,7 @@
   },
   "defaultProject": "intraway",
   "cli": {
+    "analytics": "b9fbd050-a4a4-4b60-bd84-7bc5bbbf92c0",
     "packageManager": "npm"
   }
 }

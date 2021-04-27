@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet id="001" author="Jbuitron">
+        <createTable tableName="tbl_cabecera">
+            <column name="id_cabecera" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="fecha" type="timestamp" />
+            <column name="codigo" type="varchar(60)"/>
+            <column name="descripcion" type="varchar(50)"/>
+            <column name="id_respusta" type="bigint"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="002" author="Jbuitron">
+        <createTable tableName="tbl_respuesta">
+            <column name="id_respusta" type="bigint">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="resultado" type="varchar(50)"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="003" author="Jbuitron">
+        <addForeignKeyConstraint baseColumnNames="id_respusta"
+                                 baseTableName="tbl_cabecera"
+                                 constraintName="fk_cabecera_respuesta"
+                                 referencedColumnNames="id_respusta"
+                                 referencedTableName="tbl_respuesta"/>
+    </changeSet>
+
+    <changeSet author="Jbuitron" id="004">
+        <createSequence cycle="false" incrementBy="1" maxValue="9223372036854775807" minValue="1" sequenceName="seq_id_cabecera" startValue="1"/>
+    </changeSet>
+
+    <changeSet author="Jbuitron" id="005">
+        <createSequence cycle="false" incrementBy="1" maxValue="9223372036854775807" minValue="1" sequenceName="seq_id_respusta" startValue="1"/>
+    </changeSet>
+
+    <changeSet author="Jbuitron" id="006">
+        <sql dbms="postgresql"
+             endDelimiter=";"
+             splitStatements="true"
+             stripComments="true">
+            ALTER TABLE "public"."tbl_cabecera" ALTER COLUMN "id_cabecera" SET DEFAULT nextval('seq_id_cabecera');
+        </sql>
+    </changeSet>
+
+    <changeSet author="Jbuitron" id="007">
+        <sql dbms="postgresql"
+             endDelimiter=";"
+             splitStatements="true"
+             stripComments="true">
+            ALTER TABLE "public"."tbl_respuesta" ALTER COLUMN "id_respusta" SET DEFAULT nextval('seq_id_respusta');
+        </sql>
+    </changeSet>
+</databaseChangeLog>
